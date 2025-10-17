@@ -1,0 +1,58 @@
+{% extends 'plotter/base.html' %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-6">
+        <h2>Построитель графиков функций</h2>
+
+        <form method="post">
+            {% csrf_token %}
+
+            <div class="mb-3">
+                <label class="form-label">Уравнение:</label>
+                {{ form.equation }}
+                <div class="form-text">{{ form.equation.help_text }}</div>
+                {% if form.equation.errors %}
+                <div class="alert alert-danger">{{ form.equation.errors }}</div>
+                {% endif %}
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="mb-3">
+                        <label class="form-label">X min:</label>
+                        {{ form.x_min }}
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="mb-3">
+                        <label class="form-label">X max:</label>
+                        {{ form.x_max }}
+                    </div>
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Построить график</button>
+            <a href="{% url 'examples' %}" class="btn btn-secondary">Примеры</a>
+        </form>
+    </div>
+
+    <div class="col-md-6">
+        {% if plot_url %}
+            <h3>График: {{ equation }}</h3>
+            <img src="data:image/png;base64,{{ plot_url }}" class="img-fluid" alt="График функции">
+        {% else %}
+            <div class="alert alert-info">
+                <h4>Введите уравнение для построения графика</h4>
+                <p>Примеры уравнений:</p>
+                <ul>
+                    <li>x**2 (парабола)</li>
+                    <li>math.sin(x) (синусоида)</li>
+                    <li>1/x (гипербола)</li>
+                    <li>x**3 - 3*x (кубическая парабола)</li>
+                </ul>
+            </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

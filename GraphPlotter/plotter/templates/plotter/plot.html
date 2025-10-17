@@ -1,0 +1,40 @@
+{% extends 'plotter/base.html' %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-4">
+        <h2>Новое уравнение</h2>
+        <form method="post">
+            {% csrf_token %}
+
+            <div class="mb-3">
+                <label class="form-label">Уравнение:</label>
+                {{ form.equation }}
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="mb-3">
+                        <label class="form-label">X min:</label>
+                        {{ form.x_min }}
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="mb-3">
+                        <label class="form-label">X max:</label>
+                        {{ form.x_max }}
+                    </div>
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Построить график</button>
+            <a href="{% url 'index' %}" class="btn btn-secondary">Новый график</a>
+        </form>
+    </div>
+
+    <div class="col-md-8">
+        <h3>График функции: {{ equation }}</h3>
+        <img src="data:image/png;base64,{{ plot_url }}" class="img-fluid" alt="График функции">
+    </div>
+</div>
+{% endblock %}

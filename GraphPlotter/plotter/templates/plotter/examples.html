@@ -1,0 +1,23 @@
+{% extends 'plotter/base.html' %}
+
+{% block content %}
+<h2>Примеры уравнений</h2>
+
+<div class="row">
+    {% for example in examples %}
+    <div class="col-md-6 mb-3">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">{{ example.type }}</h5>
+                <p class="card-text">{{ example.description }}</p>
+                <code>{{ example.equation }}</code>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+<div class="mt-4">
+    <a href="{% url 'index' %}" class="btn btn-primary">Вернуться к построителю</a>
+</div>
+{% endblock %}
